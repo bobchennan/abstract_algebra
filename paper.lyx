@@ -2,7 +2,7 @@
 \lyxformat 413
 \begin_document
 \begin_header
-\textclass amsbook
+\textclass book
 \begin_preamble
 %中英文混排设置%
 \usepackage[BoldFont,SlantFont,fallback,CJKchecksingle]{xeCJK}
@@ -19,6 +19,7 @@
 \XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt%左右弹性间距
 \usepackage{indentfirst}%段落首行缩进
 \setlength{\parindent}{2em}%缩进两个字符
+
  
 \end_preamble
 \use_default_options true
@@ -93,20 +94,126 @@ figs-within-sections
 
 \begin_body
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+arraystretch{1.2}%1.2表示表格中行间距的缩放比例因子(缺省的标准值为1),中文需要更多的间距 
+\backslash
+renewcommand{
+\backslash
+contentsname}{目录}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+listfigurename}{插图目录}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+listtablename}{表格目录}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+refname}{参考文献}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+abstractname}{摘要}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+indexname}{索引}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+tablename}{表}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+figurename}{图}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+appendixname{附录}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+bibname}{参考文献}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Title
 关于群论中一些算法的实现
 \end_layout
 
 \begin_layout Author
+\paragraph_spacing onehalf
 2011级ACM班 陈楠昕 5110309028
 \end_layout
 
 \begin_layout Abstract
+\paragraph_spacing onehalf
 Todd-Coxeter，Schreier graph，HLT plus lookahead，Felsch method  ，Light，统筹，结合律测试，有限
 群生成
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
 
@@ -116,14 +223,17 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Part
+\paragraph_spacing onehalf
 理论研究
 \end_layout
 
 \begin_layout Part
+\paragraph_spacing onehalf
 算法及其实现
 \end_layout
 
 \begin_layout Chapter
+\paragraph_spacing onehalf
 Todd-Coxeter算法
 \end_layout
 
@@ -144,11 +254,353 @@ Todd-Coxeter算法
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 目前知道的最好做法以及程序具体实现参考的是
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Schreier Graph
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 首先Todd-Coxeter算法在实现中是用Schreier graph来表示的。我们用一个例子来说明：
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+考虑群
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+\begin_inset Formula 
+\[
+G:=<a,b;a^{3}=b^{3}=(ab)^{2}=1>
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+以及子群
+\begin_inset Formula 
+\[
+H:=<a>\leq G
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考虑群作用
+\begin_inset Formula $G/H$
+\end_inset
+
+，我们用红色键头表示作用
+\begin_inset Formula $a$
+\end_inset
+
+，蓝色键头表示作用
+\begin_inset Formula $b$
+\end_inset
+
+。在Schreier Graph中每个点每种颜色的边入度为1，出度为1，对应群作用映射。Todd-Coxeter算法目标是我们要逐渐增加点与边，使得整个图每个点
+每种颜色边出度入度均为1，且图中任意一条生成关系(例如
+\begin_inset Formula $abab$
+\end_inset
+
+)对应路径形成一个封闭的环。
+\end_layout
+
+\begin_layout Standard
+首先我们将
+\begin_inset Formula $H$
+\end_inset
+
+定义为
+\begin_inset Formula $1$
+\end_inset
+
+，考虑到有
+\begin_inset Formula $a\in H$
+\end_inset
+
+，于是有下图：
+\begin_inset Float figure
+placement tbph
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\emph on
+\begin_inset Graphics
+	filename res/step 1.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+两条蓝色的边提醒我们存在两个点与
+\begin_inset Formula $b$
+\end_inset
+
+作用相关，但是我们目前没有给他们命名。
+\end_layout
+
+\begin_layout Standard
+接着我们对于
+\begin_inset Formula $1$
+\end_inset
+
+考虑三种关系：
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $1$
+\end_inset
+
+在
+\begin_inset Formula $a$
+\end_inset
+
+作用下不变，所以原图
+\begin_inset Formula $1$
+\end_inset
+
+满足
+\begin_inset Formula $a^{3}$
+\end_inset
+
+封闭；
+\end_layout
+
+\begin_layout Itemize
+为了满足
+\begin_inset Formula $b^{3}$
+\end_inset
+
+，我们定义
+\begin_inset Formula $2$
+\end_inset
+
+、
+\begin_inset Formula $3$
+\end_inset
+
+，分别为
+\begin_inset Formula $2:=1\times b$
+\end_inset
+
+,
+\begin_inset Formula $3:=2\times b$
+\end_inset
+
+，关系
+\begin_inset Formula $b^{3}$
+\end_inset
+
+告诉我们这三个点形成蓝色封闭三角形。于是我们得到下图：
+\begin_inset Float figure
+placement tbph
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename res/step 2.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+检查
+\begin_inset Formula $1$
+\end_inset
+
+处关系
+\begin_inset Formula $abab$
+\end_inset
+
+，已经出现的有：
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename res/step 3.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+于是可以推断
+\begin_inset Formula $2\times a=3$
+\end_inset
+
+，进而得到下图：
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename res/step 4.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+重复这些步骤，最终可得到：
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename res/step 5.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+HLT && Felsch
+\end_layout
+
+\begin_layout Standard
+上面的例子相对来说是一个非常简单的例子，因为我们没有发现任何两个量相同。更加一般的情况下我们经常碰到设置了多个值相同的量，这时候我们需要把图中一些点合并。
+\end_layout
+
+\begin_layout Standard
+在数据规模比较大的情况下为了控制图的大小，我们得采取一些方法。
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 参考书目
+\start_of_appendix
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+《The Todd–Coxeter procedure》，from Ken Brown, Cornell University, April 2011
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+addcontentsline{toc}{part}{参考文献}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
