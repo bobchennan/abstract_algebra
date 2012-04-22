@@ -198,7 +198,7 @@ bibname}{参考文献}
 \end_layout
 
 \begin_layout Title
-关于群论中一些算法的实现
+60阶群的一些研究
 \end_layout
 
 \begin_layout Author
@@ -208,8 +208,14 @@ bibname}{参考文献}
 
 \begin_layout Abstract
 \paragraph_spacing onehalf
-Todd-Coxeter，Schreier graph，HLT plus lookahead，Felsch method  ，Light，统筹，结合律测试，有限
-群生成
+摘要：本文主要研究了对称群及置换群中的正规子群问题以及Todd Coxeter算法实现问题
+\end_layout
+
+\begin_layout Abstract
+关键词：
+\series bold
+60阶群，Sn，对称群，An，置换群，Sn正规子群，An正规子群，Todd-Coxeter，Schreier graph，HLT plus lookahead，
+Felsch method  ，Light，统筹，结合律测试，有限群生成
 \end_layout
 
 \begin_layout Standard
@@ -225,6 +231,258 @@ LatexCommand tableofcontents
 \begin_layout Part
 \paragraph_spacing onehalf
 理论研究
+\end_layout
+
+\begin_layout Chapter
+对称群Sn以及置换群An的一些性质
+\end_layout
+
+\begin_layout Lemma
+任意两个正规子群交必为原群正规子群。
+\end_layout
+
+\begin_layout Proof
+设群
+\begin_inset Formula $H$
+\end_inset
+
+、
+\begin_inset Formula $M$
+\end_inset
+
+皆为群
+\begin_inset Formula $G$
+\end_inset
+
+正规子群，即
+\begin_inset Formula $H，M\trianglelefteq G$
+\end_inset
+
+，根据定义有
+\begin_inset Formula 
+\begin{align*}
+\forall g & \in G\text{，}\forall h\in H\text{，}ghg^{-1}\in H\\
+\forall g & \in G\text{，}\forall m\in M\text{，}gmg^{-1}\in M
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+则考虑群
+\begin_inset Formula $H\cap M$
+\end_inset
+
+，显然
+\begin_inset Formula $\forall a\in H\cap M\text{，}$
+\end_inset
+
+有
+\begin_inset Formula 
+\[
+\forall g\in G\text{，}gag^{-1}\in H\text{，}gag^{-1}\in M\Rightarrow gag^{-1}\in H\cap M
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+一个正规子群必为包含它的子群的正规子群。
+\end_layout
+
+\begin_layout Proof
+设群
+\begin_inset Formula $H$
+\end_inset
+
+为群
+\begin_inset Formula $G$
+\end_inset
+
+正规子群，即
+\begin_inset Formula $H\trianglelefteq G$
+\end_inset
+
+，根据定义有
+\begin_inset Formula 
+\[
+\forall g\in G，\forall h\in H\text{，}ghg^{-1}\in H
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+设
+\begin_inset Formula $H\leq M\leq G$
+\end_inset
+
+，则显然有
+\begin_inset Formula 
+\[
+\forall m\in M\leq G\text{，}\forall h\in H,mhm^{-1}\in H
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+对于置换群
+\begin_inset Formula $A_{n}$
+\end_inset
+
+，其正规子群为
+\begin_inset Formula $\begin{cases}
+\{1\} & n=1,2\\
+\{1\},A_{n} & n=3\\
+\{1\} & n=4\\
+\{1\},A_{n} & n\geq5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对于
+\begin_inset Formula $A_{1},A_{2},A_{3}$
+\end_inset
+
+，易见结论显然成立。
+\end_layout
+
+\begin_layout Proof
+考虑群
+\begin_inset Formula $A_{4}$
+\end_inset
+
+，非平凡子群共有8个：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\{(1),(12)(34)\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\{(1),(13)(24)\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\{(1),(14)(23)\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\{(1),(123),(132)\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\{(1),(124),(142)\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\{(1),(134),(143)\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\{(1),(234),(243)\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $B_{4}\triangleq\{(1),(12)(23),(13)(24),(14)(23)\}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+我们一一验证即发现只有
+\begin_inset Formula $B_{4}$
+\end_inset
+
+是
+\begin_inset Formula $A_{4}$
+\end_inset
+
+的正规子群。
+\end_layout
+
+\begin_layout Proof
+对于
+\begin_inset Formula $n\geq5$
+\end_inset
+
+的情况，
+\begin_inset Formula $A_{n}$
+\end_inset
+
+皆为单群，这里证明略，详情见
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+
+\end_inset
+
+
+\begin_inset Formula $P78$
+\end_inset
+
+页。
+\end_layout
+
+\begin_layout Theorem
+对于对称群
+\begin_inset Formula $S_{n}$
+\end_inset
+
+，其正规子群为
+\begin_inset Formula $\begin{cases}
+\{1\} & n=1,2\\
+\{1\},A_{n},S_{n} & n=3\\
+\{1\},B_{4},A_{4},S_{4} & n=4\\
+\{1\},A_{n},S_{n} & n\geq5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对于群
+\end_layout
+
+\begin_layout Chapter
+60阶单群性质
 \end_layout
 
 \begin_layout Part
@@ -585,6 +843,17 @@ key "key-1"
 
 《The Todd–Coxeter procedure》，from Ken Brown, Cornell University, April 2011
  
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 参考书目
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+《应用近世代数》，from 胡冠章，王殿军，July 2006
 \end_layout
 
 \begin_layout Standard
