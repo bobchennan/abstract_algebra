@@ -1,0 +1,155 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass amsbook
+\begin_preamble
+%中英文混排设置%
+\usepackage[BoldFont,SlantFont,fallback,CJKchecksingle]{xeCJK}
+\setmainfont{DejaVu Serif}%西文衬线字体
+\setsansfont{DejaVu Sans}%西文无衬线字体
+\setmonofont{DejaVu Sans Mono}%西文等宽字体
+\setCJKmainfont{Microsoft YaHei}%中文衬线字体
+\setCJKsansfont{Microsoft YaHei}%中文无衬线字体
+\setCJKmonofont{WenQuanYi Micro Hei Mono}%中文等宽字体
+\punctstyle{banjiao}%半角字符
+ 
+%其他中文设置%
+\XeTeXlinebreaklocale “zh”%中文断行
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt%左右弹性间距
+\usepackage{indentfirst}%段落首行缩进
+\setlength{\parindent}{2em}%缩进两个字符
+ 
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding default
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 3
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "unicode=false"
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+关于群论中一些算法的实现
+\end_layout
+
+\begin_layout Author
+2011级ACM班 陈楠昕 5110309028
+\end_layout
+
+\begin_layout Abstract
+Todd-Coxeter，Schreier graph，HLT plus lookahead，Felsch method  ，Light，统筹，结合律测试，有限
+群生成
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+理论研究
+\end_layout
+
+\begin_layout Part
+算法及其实现
+\end_layout
+
+\begin_layout Chapter
+Todd-Coxeter算法
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+关于Todd-Coxeter算法本身，在课堂上已经有详细介绍。但是对于Todd-Coxeter算法的实现，我一直留有疑惑。经过查阅相关资料，我发现目前来看并没有
+特别好的方法实现，而难点主要体现在以下两个方面：
+\end_layout
+
+\begin_layout Itemize
+\paragraph_spacing onehalf
+对于一个读入我们无法判断什么时候终止。特别如果群G是无限群，能在有限步内终止，但是对于时间复杂度方面不好保证。
+\end_layout
+
+\begin_layout Itemize
+\paragraph_spacing onehalf
+处理比较大的数据时不能盲目设置变量，以防图太大不好处理。
+\end_layout
+
+\begin_layout Standard
+目前知道的最好做法以及程序具体实现参考的是
+\end_layout
+
+\begin_layout Standard
+首先Todd-Coxeter算法在实现中是用Schreier graph来表示的。我们用一个例子来说明：
+\end_layout
+
+\end_body
+\end_document
