@@ -1,0 +1,130 @@
+%% LyX 2.0.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[oneside,english]{book}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontspec}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=3,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+\hypersetup{
+ unicode=false}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%中英文混排设置%
+\usepackage[BoldFont,SlantFont,fallback,CJKchecksingle]{xeCJK}
+\setmainfont{DejaVu Serif}%西文衬线字体
+\setsansfont{DejaVu Sans}%西文无衬线字体
+\setmonofont{DejaVu Sans Mono}%西文等宽字体
+\setCJKmainfont{Microsoft YaHei}%中文衬线字体
+\setCJKsansfont{Microsoft YaHei}%中文无衬线字体
+\setCJKmonofont{WenQuanYi Micro Hei Mono}%中文等宽字体
+\punctstyle{banjiao}%半角字符
+ 
+%其他中文设置%
+\XeTeXlinebreaklocale “zh”%中文断行
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt%左右弹性间距
+\usepackage{indentfirst}%段落首行缩进
+\setlength{\parindent}{2em}%缩进两个字符
+ 
+
+\makeatother
+
+\usepackage{xunicode}
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\begin{document}
+\begin{onehalfspace}
+
+\title{关于群论中一些算法的实现}
+\end{onehalfspace}
+
+\begin{onehalfspace}
+
+\author{2011级ACM班 陈楠昕 5110309028}
+\end{onehalfspace}
+
+\maketitle
+\begin{onehalfspace}
+Todd-Coxeter，Schreier graph，HLT plus lookahead，Felsch method  ，Light，统筹，结合律测试，有限群生成
+\end{onehalfspace}
+
+\begin{onehalfspace}
+\tableofcontents{}
+\end{onehalfspace}
+
+\begin{onehalfspace}
+
+\part{理论研究}
+
+
+\part{算法及其实现}
+\end{onehalfspace}
+
+\begin{onehalfspace}
+
+\chapter{Todd-Coxeter算法}
+\end{onehalfspace}
+
+\begin{onehalfspace}
+关于Todd-Coxeter算法本身，在课堂上已经有详细介绍。但是对于Todd-Coxeter算法的实现，我一直留有疑惑。经过查阅相关资料，我发现目前来看并没有特别好的方法实现，而难点主要体现在以下两个方面：
+\end{onehalfspace}
+\begin{itemize}
+\begin{onehalfspace}
+\item 对于一个读入我们无法判断什么时候终止。特别如果群G是无限群，能在有限步内终止，但是对于时间复杂度方面不好保证。
+\item 处理比较大的数据时不能盲目设置变量，以防图太大不好处理。\end{onehalfspace}
+
+\end{itemize}
+\begin{onehalfspace}
+目前知道的最好做法以及程序具体实现参考的是
+\end{onehalfspace}
+
+
+\section{Schreier Graph}
+
+\begin{onehalfspace}
+首先Todd-Coxeter算法在实现中是用Schreier graph来表示的。我们用一个例子来说明：
+
+考虑群
+
+\[
+G:=<a,b;a^{3}=b^{3}=(ab)^{2}=1>
+\]
+
+
+以及子群
+\[
+H:=<a>\leq G
+\]
+
+\end{onehalfspace}
+
+考虑群作用$G/H$，我们用红色键头表示作用$a$，蓝色键头表示作用$b$。在Schreier Graph中每个点每种颜色的边入度为1，出度为1，对应群作用映射。Todd-Coxeter算法目标是我们要逐渐增加点与边，使得整个图每个点每种颜色边出度入度均为1，且图中任意一条生成关系(例如$abab$)对应路径形成一个封闭的环。
+
+首先我们将$H$定义为$1$，考虑到有$a\in H$，于是有下图：
+
+\begin{center}
+\includegraphics{\string"res/step 1\string".png}
+\par\end{center}
+
+两条蓝色的边提醒我们存在两个点与$b$作用相关，但是我们目前没有给他们命名。
+
+接着我们对于$1$考虑三种关系：
+\begin{itemize}
+\item $1$在$a$作用下不变，所以原图$1$满足$a^{3}$封闭；
+\item 为了满足$b^{3}$，我们定义$2$、$3$，分别为$2:=1\times b$,$3:=2\times b$，关系$b^{3}$告诉我们这三个点形成蓝色封闭三角形。于是我们得到下图：\includegraphics{\string"res/step 2\string".png}
+\item 这里再此用未完成的红色键头提醒我们缺少了东西。\end{itemize}
+
+\end{document}
