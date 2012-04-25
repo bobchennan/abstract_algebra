@@ -2,15 +2,15 @@
 \lyxformat 413
 \begin_document
 \begin_header
-\textclass book
+\textclass paper
 \begin_preamble
 %中英文混排设置%
 \usepackage[BoldFont,SlantFont,fallback,CJKchecksingle]{xeCJK}
 \setmainfont{DejaVu Serif}%西文衬线字体
 \setsansfont{DejaVu Sans}%西文无衬线字体
 \setmonofont{DejaVu Sans Mono}%西文等宽字体
-\setCJKmainfont{Microsoft YaHei}%中文衬线字体
-\setCJKsansfont{Microsoft YaHei}%中文无衬线字体
+\setCJKmainfont{WenQuanYi Micro Hei}%中文衬线字体
+\setCJKsansfont{WenQuanYi Micro Hei}%中文无衬线字体
 \setCJKmonofont{WenQuanYi Micro Hei Mono}%中文等宽字体
 \punctstyle{banjiao}%半角字符
  
@@ -20,8 +20,19 @@
 \usepackage{indentfirst}%段落首行缩进
 \setlength{\parindent}{2em}%缩进两个字符
 
+\renewcommand\arraystretch{1.2}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\listfigurename}{插图目录}
+\renewcommand{\listtablename}{表格目录}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\indexname}{索引}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{图}
+\renewcommand\appendixname{附录}
  
 \end_preamble
+\options a4paper,xecjk
 \use_default_options true
 \begin_modules
 theorems-ams
@@ -30,7 +41,7 @@ figs-within-sections
 \end_modules
 \maintain_unincluded_children false
 \language english
-\language_package default
+\language_package auto
 \inputencoding default
 \fontencoding global
 \font_roman default
@@ -42,15 +53,17 @@ figs-within-sections
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+\font_cjk gbsn
 
 \graphics default
-\default_output_format default
+\default_output_format pdf4
 \output_sync 0
 \bibtex_command default
 \index_command default
 \paperfontsize default
 \spacing single
 \use_hyperref true
+\pdf_author "cnx"
 \pdf_bookmarks true
 \pdf_bookmarksnumbered true
 \pdf_bookmarksopen true
@@ -61,7 +74,7 @@ figs-within-sections
 \pdf_backref false
 \pdf_pdfusetitle true
 \pdf_quoted_options "unicode=false"
-\papersize default
+\papersize a4paper
 \use_geometry false
 \use_amsmath 2
 \use_esint 0
@@ -94,111 +107,9 @@ figs-within-sections
 
 \begin_body
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand
-\backslash
-arraystretch{1.2}%1.2表示表格中行间距的缩放比例因子(缺省的标准值为1),中文需要更多的间距 
-\backslash
-renewcommand{
-\backslash
-contentsname}{目录}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand{
-\backslash
-listfigurename}{插图目录}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand{
-\backslash
-listtablename}{表格目录}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand{
-\backslash
-refname}{参考文献}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand{
-\backslash
-abstractname}{摘要}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand{
-\backslash
-indexname}{索引}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand{
-\backslash
-tablename}{表}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand{
-\backslash
-figurename}{图}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand
-\backslash
-appendixname{附录}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand{
-\backslash
-bibname}{参考文献}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Title
-60阶群的一些研究
+\paragraph_spacing onehalf
+关于两个问题的一些研究
 \end_layout
 
 \begin_layout Author
@@ -208,14 +119,15 @@ bibname}{参考文献}
 
 \begin_layout Abstract
 \paragraph_spacing onehalf
-摘要：本文主要研究了对称群及置换群中的正规子群问题以及Todd Coxeter算法实现问题
+本文主要研究了对称群及置换群中的正规子群问题以及Todd Coxeter算法实现问题
 \end_layout
 
-\begin_layout Abstract
-关键词：
+\begin_layout Keywords
+\paragraph_spacing onehalf
+
 \series bold
-60阶群，Sn，对称群，An，置换群，Sn正规子群，An正规子群，Todd-Coxeter，Schreier graph，HLT plus lookahead，
-Felsch method  ，Light，统筹，结合律测试，有限群生成
+60阶单群，Sn，对称群，An，置换群，Sn正规子群，An正规子群，Todd-Coxeter，Schreier graph，HLT plus lookahead
+，Felsch method  
 \end_layout
 
 \begin_layout Standard
@@ -233,15 +145,24 @@ LatexCommand tableofcontents
 理论研究
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
+\paragraph_spacing onehalf
 对称群Sn以及置换群An的一些性质
 \end_layout
 
 \begin_layout Lemma
+\paragraph_spacing onehalf
+\begin_inset CommandInset label
+LatexCommand label
+name "Lemma1"
+
+\end_inset
+
 任意两个正规子群交必为原群正规子群。
 \end_layout
 
 \begin_layout Proof
+\paragraph_spacing onehalf
 设群
 \begin_inset Formula $H$
 \end_inset
@@ -271,6 +192,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Proof
+\paragraph_spacing onehalf
 则考虑群
 \begin_inset Formula $H\cap M$
 \end_inset
@@ -291,10 +213,18 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Lemma
+\paragraph_spacing onehalf
+\begin_inset CommandInset label
+LatexCommand label
+name "Lemma2"
+
+\end_inset
+
 一个正规子群必为包含它的子群的正规子群。
 \end_layout
 
 \begin_layout Proof
+\paragraph_spacing onehalf
 设群
 \begin_inset Formula $H$
 \end_inset
@@ -319,6 +249,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Proof
+\paragraph_spacing onehalf
 设
 \begin_inset Formula $H\leq M\leq G$
 \end_inset
@@ -335,6 +266,13 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Theorem
+\paragraph_spacing onehalf
+\begin_inset CommandInset label
+LatexCommand label
+name "Theorem3"
+
+\end_inset
+
 对于置换群
 \begin_inset Formula $A_{n}$
 \end_inset
@@ -352,6 +290,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Proof
+\paragraph_spacing onehalf
 对于
 \begin_inset Formula $A_{1},A_{2},A_{3}$
 \end_inset
@@ -360,6 +299,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Proof
+\paragraph_spacing onehalf
 考虑群
 \begin_inset Formula $A_{4}$
 \end_inset
@@ -369,6 +309,7 @@ LatexCommand tableofcontents
 
 \begin_deeper
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $\{(1),(12)(34)\}$
 \end_inset
 
@@ -376,6 +317,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $\{(1),(13)(24)\}$
 \end_inset
 
@@ -383,6 +325,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $\{(1),(14)(23)\}$
 \end_inset
 
@@ -390,6 +333,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $\{(1),(123),(132)\}$
 \end_inset
 
@@ -397,6 +341,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $\{(1),(124),(142)\}$
 \end_inset
 
@@ -404,6 +349,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $\{(1),(134),(143)\}$
 \end_inset
 
@@ -411,6 +357,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $\{(1),(234),(243)\}$
 \end_inset
 
@@ -418,6 +365,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $B_{4}\triangleq\{(1),(12)(23),(13)(24),(14)(23)\}$
 \end_inset
 
@@ -426,6 +374,7 @@ LatexCommand tableofcontents
 
 \end_deeper
 \begin_layout Proof
+\paragraph_spacing onehalf
 我们一一验证即发现只有
 \begin_inset Formula $B_{4}$
 \end_inset
@@ -438,6 +387,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Proof
+\paragraph_spacing onehalf
 对于
 \begin_inset Formula $n\geq5$
 \end_inset
@@ -460,7 +410,25 @@ key "key-2"
 页。
 \end_layout
 
+\begin_layout Fact
+\paragraph_spacing onehalf
+\begin_inset CommandInset label
+LatexCommand label
+name "Fact4"
+
+\end_inset
+
+任意两个奇置换乘积为偶置换。
+\end_layout
+
 \begin_layout Theorem
+\paragraph_spacing onehalf
+\begin_inset CommandInset label
+LatexCommand label
+name "Theorem5"
+
+\end_inset
+
 对于对称群
 \begin_inset Formula $S_{n}$
 \end_inset
@@ -478,11 +446,819 @@ key "key-2"
 \end_layout
 
 \begin_layout Proof
+\paragraph_spacing onehalf
 对于群
+\begin_inset Formula $S_{1},S_{2}$
+\end_inset
+
+，结论显然成立。
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Proof
+\paragraph_spacing onehalf
+下面往证对于
+\begin_inset Formula $n\geq3,n\neq4$
+\end_inset
+
+时结论成立，即
+\begin_inset Formula $S_{n}$
+\end_inset
+
+只有
+\begin_inset Formula $\{1\},A_{n},S_{n}$
+\end_inset
+
+这三个正规子群。设
+\begin_inset Formula 
+\[
+H\trianglelefteq S_{n},H\neq\{1\},H\neq S_{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+由引理
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Lemma1"
+
+\end_inset
+
+知，
+\begin_inset Formula $H\cap A_{n}\trianglelefteq S_{n}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+由引理
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Lemma2"
+
+\end_inset
+
+知，
+\begin_inset Formula $\because A_{n}\trianglelefteq S_{n}\therefore H\cap A_{n}\trianglelefteq A_{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+由定理
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Theorem3"
+
+\end_inset
+
+知，在这种情况下，
+\begin_inset Formula $H\cap A_{n}=\{1\}orA_{n}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+若
+\begin_inset Formula $H\cap A_{n}=\{1\}$
+\end_inset
+
+，则考虑
+\begin_inset Formula $H\setminus\{1\}$
+\end_inset
+
+，必全部为奇置换，且应用事实
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Fact4"
+
+\end_inset
+
+可知
+\begin_inset Formula 
+\[
+\forall x,y\in H\setminus\{1\},x\times y=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+考虑
+\begin_inset Formula $x=y$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+的情况，显然有
+\begin_inset Formula 
+\[
+x\times x=x\times y=1,\forall y\in H\setminus\{1\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+所以
+\begin_inset Formula $H\setminus\{1\}$
+\end_inset
+
+中任意两个奇置换均相等。那么我们不妨假设他们都等于
+\begin_inset Formula $z$
+\end_inset
+
+，且
+\begin_inset Formula 
+\[
+z=(ij)\cdots\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+然后设
+\begin_inset Formula $\sigma=(jk)$
+\end_inset
+
+，其中
+\begin_inset Formula $k\neq j$
+\end_inset
+
+，根据秘密武器有
+\begin_inset Formula 
+\[
+\sigma z\sigma^{-1}=(ik)\cdots\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+因为是正规子群，所以有
+\begin_inset Formula 
+\[
+\sigma z\sigma^{-1}\in H\Rightarrow\sigma z\sigma^{-1}=(ij)\cdots\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+矛盾，所以必然有
+\begin_inset Formula $H\cap A_{n}=A_{n}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+而对于
+\begin_inset Formula $n=4$
+\end_inset
+
+的情况，我们只须找出所有共轭类，取若干共轭类之并，逐个验证即可。
+\end_layout
+
+\begin_layout Section
+\paragraph_spacing onehalf
 60阶单群性质
+\end_layout
+
+\begin_layout Subsection
+\paragraph_spacing onehalf
+唯一性证明
+\end_layout
+
+\begin_layout Fact
+\paragraph_spacing onehalf
+\begin_inset CommandInset label
+LatexCommand label
+name "Fact6"
+
+\end_inset
+
+若
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $H=\left\langle x\right\rangle \text{且}H\leq G$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+，其中
+\begin_inset Formula $|G|<\infty$
+\end_inset
+
+，若
+\begin_inset Formula $N_{G}(H)=\left\langle y\right\rangle $
+\end_inset
+
+，则
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\forall g\in G,gHg^{-1}\neq H\Rightarrow N_{G}\left(gHg^{-1}\right)=\left\langle z\right\rangle $
+\end_inset
+
+，且
+\begin_inset Formula $|\left\langle y\right\rangle |=|\left\langle z\right\rangle |$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+取
+\begin_inset Formula $z=gyg^{-1}$
+\end_inset
+
+即可，则
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\left\langle z\right\rangle =\left\{ gy^{n}g^{-1}|0\leq n<|\left\langle y\right\rangle |\right\} $
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+，易见大小与
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\left\langle y\right\rangle $
+\end_inset
+
+相同。
+\end_layout
+
+\begin_layout Fact
+\paragraph_spacing onehalf
+\begin_inset CommandInset label
+LatexCommand label
+name "Fact7"
+
+\end_inset
+
+若
+\begin_inset Formula $H=\left\langle x\right\rangle \text{且}H\leq G$
+\end_inset
+
+，其中
+\begin_inset Formula $|G|<\infty$
+\end_inset
+
+，那么
+\begin_inset Formula $\forall g\in G,gHg^{-1}\neq H\Rightarrow N_{G}\left(H\right)\cap N_{G}\left(gHg^{-1}\right)=\{1\}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+\begin_inset Formula $gHg^{-1}=\left\langle gxg^{-1}\right\rangle $
+\end_inset
+
+，若
+\begin_inset Formula $\exists y\in G\text{，}y\neq1\text{，}yHy^{-1}=H\text{且}ygHg^{-1}y^{-1}=gHg^{-1}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+yg\in N_{G}(H)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+而由
+\begin_inset Formula $yHy^{-1}=H\text{，}\left(yg\right)H\left(yg\right)^{-1}=H\text{，知}\left(y^{n}g\right)H\left(y^{n}g\right)^{-1}=H\text{，即}y^{n}g\in N_{G}\left(H\right)$
+\end_inset
+
+，从而可得
+\begin_inset Formula $g\in N_{G}\left(H\right)$
+\end_inset
+
+，矛盾。
+\end_layout
+
+\begin_layout Theorem
+\paragraph_spacing onehalf
+60阶单群在同构意义下只有一个。
+\end_layout
+
+\begin_layout Proof
+\paragraph_spacing onehalf
+设
+\begin_inset Formula $G$
+\end_inset
+
+是一个单群，故
+\begin_inset Formula $G$
+\end_inset
+
+的非单位同态像一定是同构像。考虑
+\begin_inset Formula $G$
+\end_inset
+
+的任意真子群左(右)陪集在乘法作用下的置换群，一定与
+\begin_inset Formula $G$
+\end_inset
+
+同构。
+\begin_inset Formula $\because|G|\geq4!\therefore\forall H\leq G\text{，}[G:H]\geq5$
+\end_inset
+
+。下面给出两种证明：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\paragraph_spacing onehalf
+设
+\begin_inset Formula $n_{2}$
+\end_inset
+
+为
+\begin_inset Formula $G$
+\end_inset
+
+中
+\begin_inset Formula $Sylow-2$
+\end_inset
+
+子群个数，
+\begin_inset Formula $n_{3}$
+\end_inset
+
+为
+\begin_inset Formula $G$
+\end_inset
+
+中
+\begin_inset Formula $Sylow-3$
+\end_inset
+
+子群个数，
+\begin_inset Formula $n_{5}$
+\end_inset
+
+为
+\begin_inset Formula $G$
+\end_inset
+
+中
+\begin_inset Formula $Sylow-5$
+\end_inset
+
+子群个数。
+\begin_inset Newline newline
+\end_inset
+
+由Sylow定理可知有如下关系式：
+\begin_inset Formula 
+\[
+\begin{cases}
+n_{2}\mid15 & n_{2}\equiv1(MOD\,2)\\
+n_{3}\mid20 & n_{3}\equiv1(MOD\,3)\\
+n_{5}\mid12 & n_{5}\equiv1(MOD\,5)
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+由上可推出
+\begin_inset Formula 
+\begin{align*}
+n_{2} & =5\, or\,15\\
+n_{3} & =10\\
+n_{5} & =6
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+下面证明
+\begin_inset Formula $n_{2}\neq15$
+\end_inset
+
+。
+\begin_inset Formula $\forall x\in G$
+\end_inset
+
+，
+\begin_inset Formula $order(x)=2$
+\end_inset
+
+，考虑其中心化子个数，即
+\begin_inset Formula $Z_{G}(x)$
+\end_inset
+
+。因为有
+\begin_inset Formula $Z_{G}(x)\leq G$
+\end_inset
+
+，
+\begin_inset Newline newline
+\end_inset
+
+若
+\begin_inset Formula $5\mid|Z_{G}(x)|$
+\end_inset
+
+，即
+\begin_inset Formula $Z_{G}(x)$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+中存在5阶元，不妨设为
+\begin_inset Formula $y$
+\end_inset
+
+，则
+\begin_inset Formula $x\times y$
+\end_inset
+
+为10阶元，且有
+\begin_inset Formula 
+\[
+\left(x\times y\right)\left\langle y\right\rangle \left(x\times y\right)^{-1}=\left\langle y\right\rangle 
+\]
+
+\end_inset
+
+则
+\begin_inset Formula $N_{G}(\left\langle y\right\rangle )$
+\end_inset
+
+中至少有4个10阶元，并且由事实
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Fact6"
+
+\end_inset
+
+及事实
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Fact7"
+
+\end_inset
+
+，知10阶元个数至少有
+\begin_inset Formula $4\times6=24$
+\end_inset
+
+个。而3阶元共
+\begin_inset Formula $2\times10=20$
+\end_inset
+
+个，5阶元共
+\begin_inset Formula $4\times6=24$
+\end_inset
+
+个，则G中至少有
+\begin_inset Formula $24+20+24=68$
+\end_inset
+
+个元素，矛盾，所以
+\begin_inset Formula $5\nmid|Z_{G}\left(x\right)|$
+\end_inset
+
+。
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+若
+\begin_inset Formula $3||Z_{G}(x)|$
+\end_inset
+
+，即
+\begin_inset Formula $Z_{G}(x)$
+\end_inset
+
+中存在3阶元，同理可导出矛盾，所以
+\begin_inset Formula $3\nmid|Z_{G}\left(x\right)|$
+\end_inset
+
+。
+\begin_inset Newline newline
+\end_inset
+
+所以
+\begin_inset Formula $|Z_{G}\left(x\right)|\mid4$
+\end_inset
+
+。所以与
+\begin_inset Formula $x$
+\end_inset
+
+共轭的元素至少有15个，已知元素共
+\begin_inset Formula $20+24+15+1=60$
+\end_inset
+
+个，所以
+\begin_inset Formula $G$
+\end_inset
+
+中共有1阶元1个，2阶元15个，3阶元20个，5阶元24个。
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+若
+\begin_inset Formula $n_{2}=15$
+\end_inset
+
+，下面说明任意两个交只有
+\begin_inset Formula $\left\{ 1\right\} $
+\end_inset
+
+。设
+\begin_inset Formula $|K1|=|K2|=4$
+\end_inset
+
+，
+\begin_inset Formula $\exists y\neq1$
+\end_inset
+
+，
+\begin_inset Formula $y\in K1\, and\, y\in K2$
+\end_inset
+
+，因为
+\begin_inset Formula $y$
+\end_inset
+
+必为2阶元，而4阶群为交换群，所以
+\begin_inset Formula $K1\text{、}K2$
+\end_inset
+
+中所有元素皆为
+\begin_inset Formula $y$
+\end_inset
+
+正规化子，则至少有6个，矛盾。所以15个
+\begin_inset Formula $Sylow-2$
+\end_inset
+
+子群至少包含
+\begin_inset Formula $15\times3=45$
+\end_inset
+
+个，因此
+\begin_inset Formula $n_{2}=5$
+\end_inset
+
+。对于这5个子群左(右)陪集在乘法作用下的置换群同构于
+\begin_inset Formula $S_{5}$
+\end_inset
+
+的一个子群，而
+\begin_inset Formula $S_{5}$
+\end_inset
+
+中的60阶子群必为正规子群(指数为2)，再由定理
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Theorem5"
+
+\end_inset
+
+知
+\begin_inset Formula $G\cong A_{5}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+\paragraph_spacing onehalf
+同理可证
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $n_{3}=10\text{，}n_{5}=6$
+\end_inset
+
+。下面证明
+\begin_inset Formula $G$
+\end_inset
+
+有指数为5的子群。
+\begin_inset Newline newline
+\end_inset
+
+若
+\begin_inset Formula $n_{2}=5$
+\end_inset
+
+，则
+\begin_inset Formula $G$
+\end_inset
+
+的
+\begin_inset Formula $Sylow-2$
+\end_inset
+
+子群正规化子指数为5；
+\begin_inset Newline newline
+\end_inset
+
+若
+\begin_inset Formula $n_{2}=15$
+\end_inset
+
+，易见存在两个
+\begin_inset Formula $Sylow-2$
+\end_inset
+
+子群
+\begin_inset Formula $P1\text{、}P2$
+\end_inset
+
+交不为单位子群，即为2阶子群
+\begin_inset Formula $A$
+\end_inset
+
+。因为4阶群都是交换群，所以
+\begin_inset Formula 
+\[
+P1\text{、}P2\leq Z_{G}(A)<G
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+因此
+\begin_inset Formula $Z_{G}(A)$
+\end_inset
+
+的阶数是4的倍数且大于4，又不能等于3，因此为5。
+\begin_inset Newline newline
+\end_inset
+
+综上所述存在一个指数为5的子群，按子群陪集的在乘法作用下同构于
+\begin_inset Formula $S_{5}$
+\end_inset
+
+的一个子群，同上有
+\begin_inset Formula $G\cong A_{5}$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+\paragraph_spacing onehalf
+实例
 \end_layout
 
 \begin_layout Part
@@ -490,7 +1266,7 @@ key "key-2"
 算法及其实现
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 \paragraph_spacing onehalf
 Todd-Coxeter算法
 \end_layout
@@ -521,9 +1297,14 @@ key "key-1"
 \end_inset
 
 
+\begin_inset space ~
+\end_inset
+
+。
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
+\paragraph_spacing onehalf
 Schreier Graph
 \end_layout
 
@@ -563,6 +1344,7 @@ H:=<a>\leq G
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 考虑群作用
 \begin_inset Formula $G/H$
 \end_inset
@@ -584,6 +1366,7 @@ H:=<a>\leq G
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 首先我们将
 \begin_inset Formula $H$
 \end_inset
@@ -630,6 +1413,7 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 两条蓝色的边提醒我们存在两个点与
 \begin_inset Formula $b$
 \end_inset
@@ -638,6 +1422,7 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 接着我们对于
 \begin_inset Formula $1$
 \end_inset
@@ -646,6 +1431,7 @@ status collapsed
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 \begin_inset Formula $1$
 \end_inset
 
@@ -665,6 +1451,7 @@ status collapsed
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 为了满足
 \begin_inset Formula $b^{3}$
 \end_inset
@@ -717,6 +1504,7 @@ status collapsed
 \end_layout
 
 \begin_layout Itemize
+\paragraph_spacing onehalf
 检查
 \begin_inset Formula $1$
 \end_inset
@@ -789,6 +1577,7 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 重复这些步骤，最终可得到：
 \begin_inset Float figure
 placement H
@@ -820,20 +1609,39 @@ status collapsed
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
+\paragraph_spacing onehalf
 HLT && Felsch
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 上面的例子相对来说是一个非常简单的例子，因为我们没有发现任何两个量相同。更加一般的情况下我们经常碰到设置了多个值相同的量，这时候我们需要把图中一些点合并。
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 在数据规模比较大的情况下为了控制图的大小，我们得采取一些方法。
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Bibliography
-\labelwidthstring 参考书目
+\paragraph_spacing onehalf
 \start_of_appendix
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
@@ -846,7 +1654,7 @@ key "key-1"
 \end_layout
 
 \begin_layout Bibliography
-\labelwidthstring 参考书目
+\paragraph_spacing onehalf
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 key "key-2"
@@ -856,7 +1664,18 @@ key "key-2"
 《应用近世代数》，from 胡冠章，王殿军，July 2006
 \end_layout
 
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+《有限群基础》，from 王萼芳，Sep 2002
+\end_layout
+
 \begin_layout Standard
+\paragraph_spacing onehalf
 \begin_inset ERT
 status open
 

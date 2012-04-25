@@ -8,6 +8,7 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 \usepackage{color}
+\usepackage{float}
 \usepackage{graphicx}
 \usepackage{setspace}
 \usepackage[unicode=true,pdfusetitle,
@@ -18,9 +19,21 @@
  unicode=false}
 
 \makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\lyxmathsym}[1]{\ifmmode\begingroup\def\b@ld{bold}
+  \text{\ifx\math@version\b@ld\bfseries\fi#1}\endgroup\else#1\fi}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+  \theoremstyle{plain}
+  \newtheorem{lem}[thm]{\protect\lemmaname}
+  \theoremstyle{plain}
+  \newtheorem{fact}[thm]{\protect\factname}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 %中英文混排设置%
@@ -28,8 +41,8 @@
 \setmainfont{DejaVu Serif}%西文衬线字体
 \setsansfont{DejaVu Sans}%西文无衬线字体
 \setmonofont{DejaVu Sans Mono}%西文等宽字体
-\setCJKmainfont{Microsoft YaHei}%中文衬线字体
-\setCJKsansfont{Microsoft YaHei}%中文无衬线字体
+\setCJKmainfont{WenQuanYi Micro Hei}%中文衬线字体
+\setCJKsansfont{WenQuanYi Micro Hei}%中文无衬线字体
 \setCJKmonofont{WenQuanYi Micro Hei Mono}%中文等宽字体
 \punctstyle{banjiao}%半角字符
  
@@ -38,6 +51,7 @@
 \XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt%左右弹性间距
 \usepackage{indentfirst}%段落首行缩进
 \setlength{\parindent}{2em}%缩进两个字符
+
  
 
 \makeatother
@@ -45,10 +59,27 @@
 \usepackage{xunicode}
 \usepackage{polyglossia}
 \setdefaultlanguage{english}
+  \providecommand{\factname}{Fact}
+  \providecommand{\lemmaname}{Lemma}
+\providecommand{\theoremname}{Theorem}
+
 \begin{document}
 \begin{onehalfspace}
+\renewcommand\arraystretch{1.2}%1.2表示表格中行间距的缩放比例因子(缺省的标准值为1),中文需要更多的间距 \renewcommand{\contentsname}{目录}
+\renewcommand{\listfigurename}{插图目录}
+\renewcommand{\listtablename}{表格目录}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\indexname}{索引}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{图}
+\renewcommand\appendixname{附录}
+\renewcommand{\bibname}{参考文献}
+\end{onehalfspace}
 
-\title{关于群论中一些算法的实现}
+\begin{onehalfspace}
+
+\title{关于两个问题的一些研究}
 \end{onehalfspace}
 
 \begin{onehalfspace}
@@ -58,7 +89,10 @@
 
 \maketitle
 \begin{onehalfspace}
-Todd-Coxeter，Schreier graph，HLT plus lookahead，Felsch method  ，Light，统筹，结合律测试，有限群生成
+摘要：本文主要研究了对称群及置换群中的正规子群问题以及Todd Coxeter算法实现问题
+
+关键词：\textbf{60阶单群，Sn，对称群，An，置换群，Sn正规子群，An正规子群，Todd-Coxeter，Schreier
+graph，HLT plus lookahead，Felsch method  ，Light，统筹，结合律测试，有限群生成}
 \end{onehalfspace}
 
 \begin{onehalfspace}
@@ -68,7 +102,231 @@ Todd-Coxeter，Schreier graph，HLT plus lookahead，Felsch method  ，Light，�
 \begin{onehalfspace}
 
 \part{理论研究}
+\end{onehalfspace}
 
+\begin{onehalfspace}
+
+\chapter{对称群Sn以及置换群An的一些性质}
+\end{onehalfspace}
+\begin{lem}
+\begin{onehalfspace}
+\label{Lemma1}任意两个正规子群交必为原群正规子群。\end{onehalfspace}
+\end{lem}
+\begin{proof}
+\begin{onehalfspace}
+设群$H$、$M$皆为群$G$正规子群，即$H\lyxmathsym{，}M\trianglelefteq G$，根据定义有
+\begin{align*}
+\forall g & \in G\text{，}\forall h\in H\text{，}ghg^{-1}\in H\\
+\forall g & \in G\text{，}\forall m\in M\text{，}gmg^{-1}\in M
+\end{align*}
+
+
+则考虑群$H\cap M$，显然$\forall a\in H\cap M\text{，}$有
+\[
+\forall g\in G\text{，}gag^{-1}\in H\text{，}gag^{-1}\in M\Rightarrow gag^{-1}\in H\cap M
+\]
+\end{onehalfspace}
+\end{proof}
+\begin{lem}
+\begin{onehalfspace}
+\label{Lemma2}一个正规子群必为包含它的子群的正规子群。\end{onehalfspace}
+\end{lem}
+\begin{proof}
+\begin{onehalfspace}
+设群$H$为群$G$正规子群，即$H\trianglelefteq G$，根据定义有
+\[
+\forall g\in G\lyxmathsym{，}\forall h\in H\text{，}ghg^{-1}\in H
+\]
+
+
+设$H\leq M\leq G$，则显然有
+\[
+\forall m\in M\leq G\text{，}\forall h\in H,mhm^{-1}\in H
+\]
+\end{onehalfspace}
+\end{proof}
+\begin{thm}
+\begin{onehalfspace}
+\label{Theorem3}对于置换群$A_{n}$，其正规子群为$\begin{cases}
+\{1\} & n=1,2\\
+\{1\},A_{n} & n=3\\
+\{1\} & n=4\\
+\{1\},A_{n} & n\geq5
+\end{cases}$\end{onehalfspace}
+\end{thm}
+\begin{proof}
+\begin{onehalfspace}
+对于$A_{1},A_{2},A_{3}$，易见结论显然成立。
+
+考虑群$A_{4}$，非平凡子群共有8个：\end{onehalfspace}
+
+\begin{itemize}
+\begin{onehalfspace}
+\item $\{(1),(12)(34)\}$
+\item $\{(1),(13)(24)\}$
+\item $\{(1),(14)(23)\}$
+\item $\{(1),(123),(132)\}$
+\item $\{(1),(124),(142)\}$
+\item $\{(1),(134),(143)\}$
+\item $\{(1),(234),(243)\}$
+\item $B_{4}\triangleq\{(1),(12)(23),(13)(24),(14)(23)\}$\end{onehalfspace}
+
+\end{itemize}
+\begin{onehalfspace}
+我们一一验证即发现只有$B_{4}$是$A_{4}$的正规子群。
+
+对于$n\geq5$的情况，$A_{n}$皆为单群，这里证明略，详情见\cite{key-2}$P78$页。\end{onehalfspace}
+\end{proof}
+\begin{fact}
+\begin{onehalfspace}
+\label{Fact4}任意两个奇置换乘积为偶置换。\end{onehalfspace}
+\end{fact}
+\begin{thm}
+\begin{onehalfspace}
+\label{Theorem5}对于对称群$S_{n}$，其正规子群为$\begin{cases}
+\{1\} & n=1,2\\
+\{1\},A_{n},S_{n} & n=3\\
+\{1\},B_{4},A_{4},S_{4} & n=4\\
+\{1\},A_{n},S_{n} & n\geq5
+\end{cases}$\end{onehalfspace}
+\end{thm}
+\begin{proof}
+\begin{onehalfspace}
+对于群$S_{1},S_{2}$，结论显然成立。
+
+下面往证对于$n\geq3,n\neq4$时结论成立，即$S_{n}$只有$\{1\},A_{n},S_{n}$这三个正规子群。设
+\[
+H\trianglelefteq S_{n},H\neq\{1\},H\neq S_{n}
+\]
+
+
+由引理\ref{Lemma1}知，$H\cap A_{n}\trianglelefteq S_{n}$。
+
+由引理\ref{Lemma2}知，$\because A_{n}\trianglelefteq S_{n}\therefore H\cap A_{n}\trianglelefteq A_{n}$
+
+由定理\ref{Theorem3}知，在这种情况下，$H\cap A_{n}=\{1\}orA_{n}$。
+
+若$H\cap A_{n}=\{1\}$，则考虑$H\setminus\{1\}$，必全部为奇置换，且应用事实\ref{Fact4}可知
+\[
+\forall x,y\in H\setminus\{1\},x\times y=1
+\]
+
+
+考虑$x=y$的情况，显然有
+\[
+x\times x=x\times y=1,\forall y\in H\setminus\{1\}
+\]
+
+
+所以$H\setminus\{1\}$中任意两个奇置换均相等。那么我们不妨假设他们都等于$z$，且
+\[
+z=(ij)\cdots\cdots
+\]
+
+
+然后设$\sigma=(jk)$，其中$k\neq j$，根据秘密武器有
+\[
+\sigma z\sigma^{-1}=(ik)\cdots\cdots
+\]
+
+
+因为是正规子群，所以有
+\[
+\sigma z\sigma^{-1}\in H\Rightarrow\sigma z\sigma^{-1}=(ij)\cdots\cdots
+\]
+
+
+矛盾，所以必然有$H\cap A_{n}=A_{n}$。
+
+而对于$n=4$的情况，我们只须找出所有共轭类，取若干共轭类之并，逐个验证即可。\end{onehalfspace}
+
+\end{proof}
+\begin{onehalfspace}
+
+\chapter{60阶单群性质}
+\end{onehalfspace}
+
+\begin{onehalfspace}
+
+\section{唯一性证明}
+\end{onehalfspace}
+\begin{fact}
+\begin{onehalfspace}
+\label{Fact6}若\textup{$H=\left\langle x\right\rangle \text{且}H\leq G$}，其中$|G|<\infty$，若$N_{G}(H)=\left\langle y\right\rangle $，则\textup{$\forall g\in G,gHg^{-1}\neq H\Rightarrow N_{G}\left(gHg^{-1}\right)=\left\langle z\right\rangle $，且$|\left\langle y\right\rangle |=|\left\langle z\right\rangle |$。}\end{onehalfspace}
+\end{fact}
+\begin{proof}
+\begin{onehalfspace}
+取$z=gyg^{-1}$即可，则$\left\langle z\right\rangle =\left\{ gy^{n}g^{-1}|0\leq n<|\left\langle y\right\rangle |\right\} $，易见大小与$\left\langle y\right\rangle $相同。\end{onehalfspace}
+\end{proof}
+\begin{fact}
+\begin{onehalfspace}
+\label{Fact7}若$H=\left\langle x\right\rangle \text{且}H\leq G$，其中$|G|<\infty$，那么$\forall g\in G,gHg^{-1}\neq H\Rightarrow N_{G}\left(H\right)\cap N_{G}\left(gHg^{-1}\right)=\{1\}$。\end{onehalfspace}
+\end{fact}
+\begin{proof}
+\begin{onehalfspace}
+$gHg^{-1}=\left\langle gxg^{-1}\right\rangle $，若$\exists y\in G\text{，}y\neq1\text{，}yHy^{-1}=H\text{且}ygHg^{-1}y^{-1}=gHg^{-1}$，则
+\[
+yg\in N_{G}(H)
+\]
+
+
+而由$yHy^{-1}=H\text{，}\left(yg\right)H\left(yg\right)^{-1}=H\text{，知}\left(y^{n}g\right)H\left(y^{n}g\right)^{-1}=H\text{，即}y^{n}g\in N_{G}\left(H\right)$，从而可得$g\in N_{G}\left(H\right)$，矛盾。\end{onehalfspace}
+\end{proof}
+\begin{thm}
+\begin{onehalfspace}
+60阶单群在同构意义下只有一个。\end{onehalfspace}
+\end{thm}
+\begin{proof}
+\begin{onehalfspace}
+设$G$是一个单群，故$G$的非单位同态像一定是同构像。考虑$G$的任意真子群左(右)陪集在乘法作用下的置换群，一定与$G$同构。$\because|G|\geq4!\therefore\forall H\leq G\text{，}[G:H]\geq5$。下面给出两种证明：\end{onehalfspace}
+
+\begin{enumerate}
+\begin{onehalfspace}
+\item 设$n_{2}$为$G$中$Sylow-2$子群个数，$n_{3}$为$G$中$Sylow-3$子群个数，$n_{5}$为$G$中$Sylow-5$子群个数。\\
+由Sylow定理可知有如下关系式：
+\[
+\begin{cases}
+n_{2}\mid15 & n_{2}\equiv1(MOD\,2)\\
+n_{3}\mid20 & n_{3}\equiv1(MOD\,3)\\
+n_{5}\mid12 & n_{5}\equiv1(MOD\,5)
+\end{cases}
+\]
+\\
+由上可推出
+\begin{align*}
+n_{2} & =5\, or\,15\\
+n_{3} & =10\\
+n_{5} & =6
+\end{align*}
+\\
+下面证明$n_{2}\neq15$。$\forall x\in G$，$order(x)=2$，考虑其中心化子个数，即$Z_{G}(x)$。因为有$Z_{G}(x)\leq G$，\\
+若$5\mid|Z_{G}(x)|$，即$Z_{G}(x)$中存在5阶元，不妨设为$y$，则$x\times y$为10阶元，且有
+\[
+\left(x\times y\right)\left\langle y\right\rangle \left(x\times y\right)^{-1}=\left\langle y\right\rangle 
+\]
+则$N_{G}(\left\langle y\right\rangle )$中至少有4个10阶元，并且由事实\ref{Fact6}及事实\ref{Fact7}，知10阶元个数至少有$4\times6=24$个。而3阶元共$2\times10=20$个，5阶元共$4\times6=24$个，则G中至少有$24+20+24=68$个元素，矛盾，所以$5\nmid|Z_{G}\left(x\right)|$。\\
+若$3||Z_{G}(x)|$，即$Z_{G}(x)$中存在3阶元，同理可导出矛盾，所以$3\nmid|Z_{G}\left(x\right)|$。\\
+所以$|Z_{G}\left(x\right)|\mid4$。所以与$x$共轭的元素至少有15个，已知元素共$20+24+15+1=60$个，所以$G$中共有1阶元1个，2阶元15个，3阶元20个，5阶元24个。\\
+\\
+若$n_{2}=15$，下面说明任意两个交只有$\left\{ 1\right\} $。设$|K1|=|K2|=4$，$\exists y\neq1$，$y\in K1\, and\, y\in K2$，因为$y$必为2阶元，而4阶群为交换群，所以$K1\text{、}K2$中所有元素皆为$y$正规化子，则至少有6个，矛盾。所以15个$Sylow-2$子群至少包含$15\times3=45$个，因此$n_{2}=5$。对于这5个子群左(右)陪集在乘法作用下的置换群同构于$S_{5}$的一个子群，而$S_{5}$中的60阶子群必为正规子群(指数为2)，再由定理\ref{Theorem5}知$G\cong A_{5}$。
+\item 同理可证$n_{3}=10\text{，}n_{5}=6$。下面证明$G$有指数为5的子群。\\
+若$n_{2}=5$，则$G$的$Sylow-2$子群正规化子指数为5；\\
+若$n_{2}=15$，易见存在两个$Sylow-2$子群$P1\text{、}P2$交不为单位子群，即为2阶子群$A$。因为4阶群都是交换群，所以
+\[
+P1\text{、}P2\leq Z_{G}(A)<G
+\]
+\\
+因此$Z_{G}(A)$的阶数是4的倍数且大于4，又不能等于3，因此为5。\\
+综上所述存在一个指数为5的子群，按子群陪集的在乘法作用下同构于$S_{5}$的一个子群，同上有$G\cong A_{5}$。\end{onehalfspace}
+
+\end{enumerate}
+\end{proof}
+\begin{onehalfspace}
+
+\section{实例}
+\end{onehalfspace}
+
+\begin{onehalfspace}
 
 \part{算法及其实现}
 \end{onehalfspace}
@@ -88,11 +346,13 @@ Todd-Coxeter，Schreier graph，HLT plus lookahead，Felsch method  ，Light，�
 
 \end{itemize}
 \begin{onehalfspace}
-目前知道的最好做法以及程序具体实现参考的是
+目前知道的最好做法以及程序具体实现参考的是\cite{key-1}
 \end{onehalfspace}
 
+\begin{onehalfspace}
 
 \section{Schreier Graph}
+\end{onehalfspace}
 
 \begin{onehalfspace}
 首先Todd-Coxeter算法在实现中是用Schreier graph来表示的。我们用一个例子来说明：
@@ -109,22 +369,92 @@ G:=<a,b;a^{3}=b^{3}=(ab)^{2}=1>
 H:=<a>\leq G
 \]
 
-\end{onehalfspace}
 
 考虑群作用$G/H$，我们用红色键头表示作用$a$，蓝色键头表示作用$b$。在Schreier Graph中每个点每种颜色的边入度为1，出度为1，对应群作用映射。Todd-Coxeter算法目标是我们要逐渐增加点与边，使得整个图每个点每种颜色边出度入度均为1，且图中任意一条生成关系(例如$abab$)对应路径形成一个封闭的环。
 
 首先我们将$H$定义为$1$，考虑到有$a\in H$，于是有下图：
+\begin{figure}[tbph]
 
-\begin{center}
-\includegraphics{\string"res/step 1\string".png}
-\par\end{center}
+
+\begin{centering}
+\emph{\includegraphics[scale=0.5]{\string"res/step 1\string".png}}
+\par\end{centering}
+
+\end{figure}
+
 
 两条蓝色的边提醒我们存在两个点与$b$作用相关，但是我们目前没有给他们命名。
 
 接着我们对于$1$考虑三种关系：
+\end{onehalfspace}
 \begin{itemize}
+\begin{onehalfspace}
 \item $1$在$a$作用下不变，所以原图$1$满足$a^{3}$封闭；
-\item 为了满足$b^{3}$，我们定义$2$、$3$，分别为$2:=1\times b$,$3:=2\times b$，关系$b^{3}$告诉我们这三个点形成蓝色封闭三角形。于是我们得到下图：\includegraphics{\string"res/step 2\string".png}
-\item 这里再此用未完成的红色键头提醒我们缺少了东西。\end{itemize}
+\item 为了满足$b^{3}$，我们定义$2$、$3$，分别为$2:=1\times b$,$3:=2\times b$，关系$b^{3}$告诉我们这三个点形成蓝色封闭三角形。于是我们得到下图：
+\begin{figure}[tbph]
+\begin{centering}
+\includegraphics[scale=0.5]{\string"res/step 2\string".png}
+\par\end{centering}
+
+\end{figure}
+
+\item 检查$1$处关系$abab$，已经出现的有：
+\begin{figure}[H]
+
+
+\begin{centering}
+\includegraphics[scale=0.5]{\string"res/step 3\string".png}
+\par\end{centering}
+
+\end{figure}
+于是可以推断$2\times a=3$，进而得到下图：
+\begin{figure}[H]
+
+
+\begin{centering}
+\includegraphics[scale=0.5]{\string"res/step 4\string".png}
+\par\end{centering}
+
+\end{figure}
+\end{onehalfspace}
+
+\end{itemize}
+\begin{onehalfspace}
+重复这些步骤，最终可得到：
+\begin{figure}[H]
+
+
+\begin{centering}
+\includegraphics[scale=0.5]{\string"res/step 5\string".png}
+\par\end{centering}
+
+\end{figure}
+
+\end{onehalfspace}
+
+\begin{onehalfspace}
+
+\section{HLT \&\& Felsch}
+\end{onehalfspace}
+
+\begin{onehalfspace}
+上面的例子相对来说是一个非常简单的例子，因为我们没有发现任何两个量相同。更加一般的情况下我们经常碰到设置了多个值相同的量，这时候我们需要把图中一些点合并。
+
+在数据规模比较大的情况下为了控制图的大小，我们得采取一些方法。
+\end{onehalfspace}
+\begin{thebibliography}{Bibliography}
+\appendix
+\begin{onehalfspace}
+\bibitem{key-1}《The Todd–Coxeter procedure》，from Ken Brown, Cornell
+University, April 2011 
+
+\bibitem{key-2}《应用近世代数》，from 胡冠章，王殿军，July 2006
+\end{onehalfspace}
+
+\bibitem{key-1}《有限群基础》，from 王萼芳，Sep 2002
+
+\end{thebibliography}
+\begin{onehalfspace}
+\addcontentsline{toc}{part}{参考文献}\end{onehalfspace}
 
 \end{document}

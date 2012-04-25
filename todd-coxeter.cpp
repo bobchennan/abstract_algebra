@@ -1,3 +1,4 @@
+#include<set>
 #include<cmath>
 #include<vector>
 #include<string>
@@ -9,6 +10,56 @@
 using namespace std;
 
 namespace cnx{
+
+    const int N=100003;    
+    typedef vector< pair<int,int> > coset;
+    coset T[N];
+    
+    struct graph{
+        int st[N],fa[N];
+        set<int> h;
+        void init(){
+            st[0]=0;
+            for(int i=1;i<N;++i)
+                st[++st[0]]=i;
+            for(int i=1;i<N;++i)
+                fa[i]=i;
+        }
+        int getnode(){
+            return st[st[0]--];
+        }
+        int find(int x){
+            return fa[x]==x?x:fa[x]=find(fa[x]);
+        }
+        void uni(int x,int y){
+            x=find(x),y=find(y);
+            fa[x]=y;
+        }
+        void _merge(int x,int y){
+            h.insert(x);
+            h.insert(y);
+            uni(x,y);
+            for(int i=0;i<T[x].size();++i){
+                if(i>=T[y].size())continue;
+                if(T[x][i].first&&T[y][i].first&&T[x][i].first!=T[y][i].first)
+                    _merge(T[x][i].first,T[y][i].first);
+                if(T[x][i].second&&T[y][i].second&&T[x][i].second!=T[y][i].second)
+                    _merge(T[x][i].second,T[y][i].second);
+            }
+        }
+        void merge(int x,int y){
+            h.clear();
+            _merge(x,y);
+            for(set<int>::iterator it=h.begin();it!=h.end();++it){
+                int x=*it;
+                if(fa[x]==x)continue;
+                int f=find(x);
+                for(int j=0;j<max(T[x].size(),T[y].size());++j){
+                }
+            }
+        }
+    };
+    
     int n;
     vector<string> g,h;
     void readin(){
