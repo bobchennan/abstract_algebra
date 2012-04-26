@@ -20,16 +20,6 @@
 \usepackage{indentfirst}%段落首行缩进
 \setlength{\parindent}{2em}%缩进两个字符
 
-\renewcommand\arraystretch{1.2}
-\renewcommand{\contentsname}{目录}
-\renewcommand{\listfigurename}{插图目录}
-\renewcommand{\listtablename}{表格目录}
-\renewcommand{\refname}{参考文献}
-\renewcommand{\abstractname}{摘要}
-\renewcommand{\indexname}{索引}
-\renewcommand{\tablename}{表}
-\renewcommand{\figurename}{图}
-\renewcommand\appendixname{附录}
  
 \end_preamble
 \options a4paper,xecjk
@@ -107,8 +97,115 @@ figs-within-sections
 
 \begin_body
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+arraystretch{1.2}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+contentsname}{目录}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+listfigurename}{插图目录}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+listtablename}{表格目录}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+refname}{参考文献}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+abstractname}{摘要}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+indexname}{索引}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+tablename}{表}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+figurename}{图}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+appendixname{附录}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+keywordname}{关键字}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Title
-\paragraph_spacing onehalf
 关于两个问题的一些研究
 \end_layout
 
